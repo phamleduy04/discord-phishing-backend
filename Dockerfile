@@ -4,6 +4,6 @@ FROM node:alpine
 WORKDIR /home/container
 
 COPY ./package.json ./yarn.lock ./
-RUN npm ci
+RUN yarn install --frozen-lockfile
 
 COPY . .
