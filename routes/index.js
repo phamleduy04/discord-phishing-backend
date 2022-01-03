@@ -16,12 +16,12 @@ router.get('/all', async (req, res, next) => {
 
 router.get('/links', async (req, res, next) => {
   const result = await getAll('links:*');
-  res.status(200).send(_.uniq(result));
+  res.status(200).send(_.uniq(result.filter(el => el.length).sort()));
 });
 
 router.get('/domains', async (req, res, next) => {
   const data = await getAll('domains:*');
-  res.status(200).send(_.uniq(data.filter(el => !el.includes('/'))));
+  res.status(200).send(_.uniq(data.filter(el => !el.includes('/') && el.length).sort()));
 });
 
 router.get('/check', async (req, res, next) => {

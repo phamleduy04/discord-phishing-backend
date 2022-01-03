@@ -7,8 +7,8 @@ const logger = require('../log');
 module.exports = async () => {
     try {
         const { data } = await axios.get(url);
-        await set(`domains:nikolaischunk`, JSON.stringify(data.domains.filter(el => !el.includes('/') && Boolean)));
-        await set(`links:nikolaischunk`, JSON.stringify(data.domains.filter(el => el.includes('/') && Boolean)));
+        await set(`domains:nikolaischunk`, JSON.stringify(data.domains.filter(el => !el.includes('/') && el.length)));
+        await set(`links:nikolaischunk`, JSON.stringify(data.domains.filter(el => el.includes('/') && el.length)));
         logger.info('Updated discord-phishing-links by nikolaischunk');
     } catch (err) {
         logger.err('Error! discord-phishing-links by nikolaischunk', err);

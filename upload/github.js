@@ -9,8 +9,8 @@ module.exports = async () => {
     const links = await getAll('links:*');
     const domains = await getAll('domains:*');
 
-    await uploadFile(JSON.stringify(_.uniq(links).filter(Boolean), null, 5), 'blacklist-links.json');
-    await uploadFile(JSON.stringify(_.uniq(domains).filter(Boolean), null, 5), 'blacklist-domains.json');
+    await uploadFile(JSON.stringify(_.uniq(links).filter(v => v.length).sort(), null, 5), 'blacklist-links.json');
+    await uploadFile(JSON.stringify(_.uniq(domains).filter(v => v.length).sort(), null, 5), 'blacklist-domains.json');
 };
 
 async function uploadFile(content, fileName) {
