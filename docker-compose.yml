@@ -12,10 +12,18 @@ services:
 
   app:
     image: phamleduy04/discord-phishing-backend:latest
+    container_name: discord-phishing-backend
+    command: ["npm", "start"]
+    env_file: .env
+    environment: 
+      - DOCKER=true
     networks:
       - redis-net
     depends_on:
       - redis
+    ports:
+      - "${PORT}:${PORT}"
+    restart: always
 
 networks:
   redis-net:
