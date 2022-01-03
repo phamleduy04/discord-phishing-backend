@@ -43,9 +43,11 @@ router.post('/add', async (req, res, next) => {
   else url = url.split('/')[0];
   const parseDomainURL = parseDomain(url);
   if (parseDomainURL.type == 'LISTED') url = `${parseDomainURL.labels.filter(el => !parseDomainURL.subDomains.includes(el)).join('.')}`;
+  const all = await getAll();
+  if (all.includes(url)) return res.status(409).send({ message: 'URL already exists on others database!' });
   const customData = JSON.parse(await get(`domains:custom`)) || [];
   const newData = _.uniq([...customData, url]);
-  if (customData.length == newData.length) return res.status(409).send({ message: 'URL already exists!' });
+  if (customData.length == newData.length) return res.status(409).send({ message: 'URL already exists on customdb!' });
   await set(`domains:custom`, JSON.stringify(newData));
   res.status(200).send({ message: 'URL added!' });
 });
