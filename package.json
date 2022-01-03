@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "cross-env NODE_ENV=development nodemon ./bin/www"
+    "dev": "cross-env NODE_ENV=development nodemon ./bin/www",
+    "docker-start": "docker-compose -f docker-compose.yml up -d --build"
   },
   "dependencies": {
     "axios": "^0.24.0",
