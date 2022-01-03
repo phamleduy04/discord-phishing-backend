@@ -2,7 +2,7 @@
 Discord Phishing API list with Redis and Docker
 
 # Access to API
-- There is no API, you can access the [blacklist domain](https://raw.githubusercontent.com/phamleduy04/discord-phishing-backend/main/blacklist-domains.json) and [blacklist links](https://raw.githubusercontent.com/phamleduy04/discord-phishing-backend/main/blacklist-links.json) at this repo. 
+- There is no public API right now, but you can access the [blacklist domain](https://raw.githubusercontent.com/phamleduy04/discord-phishing-backend/main/blacklist-domains.json) and [blacklist links](https://raw.githubusercontent.com/phamleduy04/discord-phishing-backend/main/blacklist-links.json) at this repo. 
 # Installation
 ## Without Docker
 ### Redis 
