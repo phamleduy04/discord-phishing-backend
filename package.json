@@ -4,6 +4,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "cross-env NODE_ENV=development nodemon ./bin/www",
+    "docker-build": "docker build -t phamleduy04/discord-phishing-backend .",
     "docker-start": "docker-compose -f docker-compose.yml up -d --build"
   },
   "dependencies": {

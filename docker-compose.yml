@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.3"
 
 services:
   redis:
@@ -11,7 +11,7 @@ services:
       - redis-data:/data
 
   app:
-    image: novelcovid/novelcovid-api:latest
+    image: phamleduy04/discord-phishing-backend:latest
     networks:
       - redis-net
     depends_on:
