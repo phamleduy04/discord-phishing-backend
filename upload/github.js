@@ -29,7 +29,7 @@ async function uploadFile(content, fileName) {
 
     const request = {
         method: 'put',
-        url: `https://api.github.com/repos/phamleduy04/discord-phishing-backend/contents/${fileName}`,
+        url: `https://api.github.com/repos/${config.github.repo}/contents/${fileName}`,
         headers,
         data,
     };
