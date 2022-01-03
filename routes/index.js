@@ -32,7 +32,20 @@ router.get('/check', async (req, res, next) => {
   const parseDomainURL = parseDomain(url);
   if (parseDomainURL.type == 'LISTED') url = `${parseDomainURL.labels.filter(el => !parseDomainURL.subDomains.includes(el)).join('.')}`;
   const all = await getAll();
-  res.status(200).json({ blacklist: all.includes(url), domain: url });
+  let blacklist = all.includes(url) ? true : false;
+  if (isURL(req.query.url)) {
+    const urlParsed = new URL(req.query.url);
+    const link = urlParsed.hostname + urlParsed.pathname;
+    if (all.includes(link)) {
+      blacklist = true;
+      url = link;
+    }
+  }
+  else if (all.includes(req.query.url)) {
+    blacklist = true;
+    url = req.query.url;
+  }
+  res.status(200).json({ blacklist, domain: url });
 });
 
 router.post('/add', async (req, res, next) => {
