@@ -4,6 +4,7 @@ services:
   redis:
     image: redis:latest
     hostname: redis
+    restart: always
     container_name: discord-phishing-redis
     networks:
       - redis-net
