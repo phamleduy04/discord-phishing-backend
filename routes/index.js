@@ -65,4 +65,19 @@ router.post('/add', async (req, res, next) => {
   res.status(200).send({ message: 'URL added!' });
 });
 
+router.post('/addlink', async (req, res, next) => {
+  if (req.headers.authorization !== config.authorization) return res.status(400).send({ message: 'Unauthorized!' });
+  let url = req.body.url;
+  const urlParsed = new URL(url);
+  if (!url) return res.status(400).send({ message: 'No URL provided!' });
+  if (isURL(url)) url = `${urlParsed.hostname}${urlParsed.pathname}`;
+  const all = await getAll();
+  if (all.includes(url)) return res.status(409).send({ message: 'URL already exists on others database!' });
+  const customData = JSON.parse(await get(`links:custom`)) || [];
+  const newData = _.uniq([...customData, url]);
+  if (customData.length == newData.length) return res.status(409).send({ message: 'URL already exists on customdb!' });
+  await set(`links:custom`, JSON.stringify(newData));
+  res.status(200).send({ message: 'URL added!' });
+});
+
 module.exports = router;
