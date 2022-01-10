@@ -21,9 +21,12 @@ async function uploadFile(content, fileName) {
     const url = `https://api.github.com/repos/${config.github.repo}/contents/${fileName}`;
     const fileData = await axios.get(url, { headers }).catch(() => null);
 
+    const contentEncoded = Buffer.from(content).toString('base64');
+    if (contentEncoded == fileData.data.content) return;
+
     const data = JSON.stringify({
         message: `Automatic update ${fileName}`,
-        content: Buffer.from(content, 'utf-8').toString('base64'),
+        content: contentEncoded,
         sha: fileData ? fileData.data.sha : null,
     });
 
