@@ -20,6 +20,7 @@ app.use((req, res, next) => {
 async function exectueScraper() {
   require('./scraper/discord-phishing-links')();
   require('./scraper/discord-scam-links')();
+  require('./scraper/discord-phishing-backend')();
 };
 
 exectueScraper();
