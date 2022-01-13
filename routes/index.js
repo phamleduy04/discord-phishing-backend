@@ -4,6 +4,7 @@ const { getAll, get, set } = require('../handler/database');
 const _ = require('lodash');
 const { parseDomain } = require('parse-domain');
 const { config } = require('../config');
+const traceRedirect = require('../traceRedirect');
 /* GET home page. */
 router.get('/', (req, res, next) => {
   res.status(200).send('Home page!');
@@ -78,6 +79,18 @@ router.post('/addlink', async (req, res, next) => {
   if (customData.length == newData.length) return res.status(409).send({ message: 'URL already exists on customdb!' });
   await set(`links:custom`, JSON.stringify(newData));
   res.status(200).send({ message: 'URL added!' });
+});
+
+router.get('/trace-redirect', async (req, res, next) => {
+  const url = req.query.url;
+  if (!url || !isURL(url)) return res.status(400).send({ message: 'Invalid URL!' });
+  try {
+    const traceData = await traceRedirect(url);
+    res.status(200).json(traceData);
+  } catch(err) {
+    console.error(err);
+    res.status(500).send({ message: "error, please try again later" });
+  }
 });
 
 module.exports = router;
