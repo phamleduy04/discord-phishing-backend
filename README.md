@@ -6,12 +6,17 @@ Discord Phishing API list with Redis and Docker
 - I have a [public API](https://discord-phishing-backend.herokuapp.com/) here.
 
 # API Endpoints
-1. GET `/all`:   Get all data (includes blacklist links and domains)
-2. GET `/links`: Get all blacklist links
-3. GET `/domains`: Get all blacklist domains
-4. GET `/check?url={query}`: Check if your url is in blacklist
-5. POST `/add`: Add domain to blacklist (Require authorization header and url in body)
-7. POST `/addlink`: Add link to blacklist (Require authorization header and url in body)
+## Authorization
+Some API requests require the use of a generated API key. To set API key, please add `AUTHORIZATION` to your `.env` file. If not the default API key is `secret`. To authenticate an API request, you should provide your API key in the Authorization header.
+
+| Method | Endpoint | Description | Require Authorzation Header? |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/all` | Get all data (includes blacklist links and domains) | No |
+| `GET` | `/links` | Get all blacklist domains | No |
+| `GET` | `/check?url={query}` | Check if a url is in blacklist | No |
+| `GET` | `/trace-redirect?url={query}` | Trace redirect a url (shorten link) | No |
+| `POST` | `/add` | Add domain to blacklist **(Require url in body)** | Yes |
+| `POST` | `/all` | Add link to blacklist **(Require url in body)** | Yes |
 
 # Installation
 ## Without Docker
