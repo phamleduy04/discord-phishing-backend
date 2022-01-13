@@ -1,8 +1,8 @@
 const { config } = require('../config');
 const { getAll } = require('../handler/database');
 const logger = require('../log');
-const axios = require('axios');
 const _ = require('lodash');
+const { request } = require('undici');
 
 module.exports = async () => {
     if (!config.github) return;
@@ -17,28 +17,27 @@ async function uploadFile(content, fileName) {
     const headers = {
         'Authorization': `Bearer ${config.github.token}`,
         'Content-Type': 'application/json',
+        'User-Agent': 'undici',
     };
     const url = `https://api.github.com/repos/${config.github.repo}/contents/${fileName}`;
-    const fileData = await axios.get(url, { headers }).catch(() => null);
-
+    const fileData = await request(url, { headers }).then(el => el.body.json()).catch(() => null);
     const contentEncoded = Buffer.from(content).toString('base64');
-    if (contentEncoded == fileData.data.content) return;
+    if (contentEncoded == fileData.content) return;
 
     const data = JSON.stringify({
         message: `Automatic update ${fileName}`,
         content: contentEncoded,
-        sha: fileData ? fileData.data.sha : null,
+        sha: fileData ? fileData.sha : null,
     });
 
-    const request = {
-        method: 'put',
-        url: `https://api.github.com/repos/${config.github.repo}/contents/${fileName}`,
+    const reuqestOptions = {
+        method: 'PUT',
         headers,
-        data,
+        body: data,
     };
 
     try {
-        await axios(request);
+        await request(url, reuqestOptions);
         logger.info(`Uploaded ${fileName} to github!`);
     }
     catch(err) {
