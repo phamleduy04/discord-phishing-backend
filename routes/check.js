@@ -3,14 +3,10 @@ const isURL = require('is-url');
 const { getAll, hasHash } = require('../handler/database');
 const { parseDomain, fromUrl } = require('parse-domain');
 const { createHash } = require('crypto');
-const compareUrls = require('compare-urls');
-
-const removeHttps = input => input.replace(/^https?:\/\//, '');
-const filterLink = (url, urlToCheck) => {
-    return urlToCheck.includes(url) || compareUrls(urlToCheck, url) || compareUrls(urlToCheck, removeHttps(url));
-};
+const filterLink = (url, urlToCheck) => urlToCheck.includes(url);
 
 router.get('/', async (req, res, next) => {
+    console.log('test');
     const url = req.query.url;
     let urlToCheck, domain = url;
     if (!url) return res.status(400).send({ message: 'No URL provided!' });
