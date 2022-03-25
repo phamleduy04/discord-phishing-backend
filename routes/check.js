@@ -6,7 +6,6 @@ const { createHash } = require('crypto');
 const filterLink = (url, urlToCheck) => urlToCheck.includes(url);
 
 router.get('/', async (req, res, next) => {
-    console.log('test');
     const url = req.query.url;
     let urlToCheck, domain = url;
     if (!url) return res.status(400).send({ message: 'No URL provided!' });
