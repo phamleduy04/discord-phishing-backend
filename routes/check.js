@@ -3,7 +3,8 @@ const isURL = require('is-url');
 const { getAll, hasHash } = require('../handler/database');
 const { parseDomain, fromUrl } = require('parse-domain');
 const { createHash } = require('crypto');
-const filterLink = (url, urlToCheck) => urlToCheck.includes(url);
+
+const filterDomains = (url, urlToCheck) => url == urlToCheck;
 
 router.get('/', async (req, res, next) => {
     const url = req.query.url;
@@ -16,9 +17,9 @@ router.get('/', async (req, res, next) => {
     if (parsedURL.type === 'LISTED') domain = parsedURL.domain + '.' + parsedURL.topLevelDomains[0];
     if (isURL(url)) urlToCheck = new URL(url).hostname;
     else urlToCheck = req.query.url.split('/')[0];
-    let linkCheck = filterAndReturn(url, blacklistDomains);
-    if (linkCheck.blacklist) return res.json({ blacklist: true, domain: domain });
-    linkCheck = filterAndReturn(url, blacklistLinks);
+    const domainCheck = filterAndReturn(urlToCheck, blacklistDomains);
+    if (domainCheck.blacklist) return res.json({ blacklist: true, domain: domain });
+    const linkCheck = filterLinks(url, blacklistLinks);
     if (linkCheck.blacklist) res.json({ blacklist: true, domain: url });
     else res.json({ blacklist: false, domain: url });
 });
@@ -31,9 +32,18 @@ async function hashCheck(url) {
 }
 
 function filterAndReturn(url, list) {
-    const filtered = list.filter(item => filterLink(item, url));
+    const filtered = list.filter(item => filterDomains(item, url));
     if (filtered.length !== 0) return { url, blacklist: true, data: filtered[0] };
     else return { url, blacklist: false };
+}
+
+function filterLinks(url, list) {
+    let blacklist = false;
+    for (let i = 0; i < list.length; i++) if (list[i] == url) {
+        blacklist = true;
+        break;
+    }
+    return { url, blacklist };
 }
 
 module.exports = router;
