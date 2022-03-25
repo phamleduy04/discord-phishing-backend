@@ -1,7 +1,6 @@
 const express = require('express');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
 require('dotenv').config();
 const app = express();
 const ms = require('ms');
@@ -11,7 +10,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/', indexRouter);
+app.use('/check', require('./routes/check'));
+app.use('/', require('./routes/index'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
