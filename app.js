@@ -23,11 +23,9 @@ const exectueScraper = () => fs.readdirSync('./scraper/').forEach(file => requir
 exectueScraper();
 setInterval(exectueScraper, ms('30m'));
 
-function uploadToGithub() {
-  require('./upload/github')();
-}
-
+const uploadToGithub = () => require('./upload/github')();
 setInterval(uploadToGithub, ms('6h'));
 
+require('./sinking-yatcht')();
 
 module.exports = app;
