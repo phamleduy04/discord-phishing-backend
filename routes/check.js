@@ -8,6 +8,10 @@ const filterDomains = (url, urlToCheck) => url == urlToCheck;
 
 router.get('/', async (req, res, next) => {
     const url = req.query.url;
+    try {
+        new URL(url);
+    }
+    catch { return res.status(400).json({ message: 'Invalid url' }); };
     let urlToCheck, domain = url;
     if (!url) return res.status(400).send({ message: 'No URL provided!' });
     if (await hashCheck(url)) return res.json({ blacklist: true, domain: url });
