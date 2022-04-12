@@ -1,7 +1,6 @@
 lockfileVersion: 5.3
 
 specifiers:
-  base-64: ^1.0.0
   chalk: 4.1.2
   compare-urls: 2.0.0
   cross-env: ^7.0.3
@@ -23,7 +22,6 @@ specifiers:
   ws: ^8.5.0
 
 dependencies:
-  base-64: 1.0.0
   chalk: 4.1.2
   compare-urls: 2.0.0
   debug: 4.3.4
@@ -167,10 +165,6 @@ packages:
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
     dev: true
-
-  /base-64/1.0.0:
-    resolution: {integrity: sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==}
-    dev: false
 
   /basic-auth/2.0.1:
     resolution: {integrity: sha512-NF+epuEdnUYVlGuhaxbbq+dvJttwLnGY+YixlXlME5KpQ5W3CnXA5cVTneY3SPbPDRkcjMbifrwmFYcClgOZeg==}
