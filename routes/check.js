@@ -8,21 +8,19 @@ const filterDomains = (url, urlToCheck) => url == urlToCheck;
 
 router.get('/', async (req, res, next) => {
     const url = req.query.url;
-    try {
-        new URL(url);
-    }
-    catch { return res.status(400).json({ message: 'Invalid url' }); };
-    let urlToCheck, domain = url;
     if (!url) return res.status(400).send({ message: 'No URL provided!' });
+    let urlToCheck, domain = url;
     if (await hashCheck(url)) return res.json({ blacklist: true, domain: url });
     const blacklistDomains = await getAll('domains:*');
     const blacklistLinks = await getAll('links:*');
     const parsedURL = parseDomain(fromUrl(url));
     if (parsedURL.type === 'LISTED') domain = parsedURL.domain + '.' + parsedURL.topLevelDomains[0];
-    if (isURL(url)) urlToCheck = new URL(url).hostname;
-    else urlToCheck = req.query.url.split('/')[0];
+    try {
+        urlToCheck = new URL(url).hostname;
+    }
+    catch { urlToCheck = req.query.url.split('/')[0]; };
     const domainCheck = filterAndReturn(urlToCheck, blacklistDomains);
-    if (domainCheck.blacklist) return res.json({ blacklist: true, domain: domain });
+    if (domainCheck.blacklist) return res.json({ blacklist: true, domain });
     const linkCheck = filterLinks(url, blacklistLinks);
     if (linkCheck.blacklist) res.json({ blacklist: true, domain: url });
     else res.json({ blacklist: false, domain: url });
