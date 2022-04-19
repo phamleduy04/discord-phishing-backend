@@ -11,6 +11,7 @@ specifiers:
   http-string-parser: ^0.0.6
   ioredis: 4.28.5
   is-url: ^1.2.4
+  jaro-winkler: ^0.2.8
   lodash: ^4.17.21
   moment: ^2.29.1
   moment-timezone: ^0.5.34
@@ -30,6 +31,7 @@ dependencies:
   http-string-parser: 0.0.6
   ioredis: 4.28.5
   is-url: 1.2.4
+  jaro-winkler: 0.2.8
   lodash: 4.17.21
   moment: 2.29.1
   moment-timezone: 0.5.34
@@ -976,6 +978,10 @@ packages:
   /isexe/2.0.0:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
     dev: true
+
+  /jaro-winkler/0.2.8:
+    resolution: {integrity: sha1-Zyfg0LcJHiQ2+TVt6b+I+tI+U0o=}
+    dev: false
 
   /js-yaml/4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
