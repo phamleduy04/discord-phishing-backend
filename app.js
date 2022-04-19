@@ -1,6 +1,5 @@
 const express = require('express');
 const logger = require('morgan');
-
 require('dotenv').config();
 const app = express();
 const ms = require('ms');
@@ -12,6 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/check', require('./routes/check'));
 app.use('/', require('./routes/index'));
+app.use('/rapidreport', (require('./routes/rapidreport')));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
