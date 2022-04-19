@@ -41,4 +41,10 @@ async function createWebsocket() {
             await set(`domains:sinking-yachts`, JSON.stringify(_.uniq(_.difference(doaminsList, data.domains))));
         logger.info(`${data.type} ${data.domains.join(', ')} to sinking-yachts`);
     });
+
+    // renew connection every 3 hours
+    setTimeout(() => {
+        ws.terminate();
+        createWebsocket();
+    }, 10800000);
 };

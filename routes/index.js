@@ -5,7 +5,6 @@ const _ = require('lodash');
 const { parseDomain } = require('parse-domain');
 const { config } = require('../config');
 const traceRedirect = require('../traceRedirect');
-const { createHash } = require('crypto');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -25,31 +24,6 @@ router.get('/links', async (req, res, next) => {
 router.get('/domains', async (req, res, next) => {
     const data = await getAll('domains:*');
     res.status(200).send(_.uniq(data.filter(el => !el.includes('/') && el.length).sort()));
-});
-
-router.get('/check', async (req, res, next) => {
-    let url = req.query.url;
-    if (!url) return res.status(400).send({ message: 'No URL provided!' });
-    if (isURL(url)) url = new URL(url).hostname;
-    else url = url.split('/')[0];
-    const parseDomainURL = parseDomain(url);
-    if (parseDomainURL.type == 'LISTED') url = `${parseDomainURL.labels.filter(el => !parseDomainURL.subDomains.includes(el)).join('.')}`;
-    const all = await getAll();
-    let blacklist = all.includes(url) ? true : false;
-    if (isURL(req.query.url)) {
-        const urlParsed = new URL(req.query.url);
-        const link = urlParsed.hostname + urlParsed.pathname;
-        const hash = createHash('sha256').update(link).digest('hex');
-        if (all.includes(link) || all.includes(hash)) {
-            blacklist = true;
-            url = link;
-        }
-    }
-    else if (all.includes(req.query.url) || all.includes(createHash('sha256').update(req.query.url).digest('hex'))) {
-        blacklist = true;
-        url = req.query.url;
-    }
-    res.status(200).json({ blacklist, domain: url });
 });
 
 router.post('/add', async (req, res, next) => {

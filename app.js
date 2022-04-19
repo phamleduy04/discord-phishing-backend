@@ -21,10 +21,10 @@ app.use((req, res, next) => {
 const exectueScraper = () => fs.readdirSync('./scraper/').forEach(file => require(`./scraper/${file}`)());
 
 exectueScraper();
-setInterval(exectueScraper, ms('30m'));
+setInterval(exectueScraper, ms('20m'));
 
 const uploadToGithub = () => require('./upload/github')();
-setInterval(uploadToGithub, ms('6h'));
+setInterval(uploadToGithub, ms('12h'));
 
 require('./sinking-yatcht')();
 

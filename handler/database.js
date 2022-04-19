@@ -45,4 +45,9 @@ module.exports = {
         const values = await db.mget(keys);
         return _.uniq(values.map(v => JSON.parse(v)).flat());
     },
+    hasHash: async (hash) => {
+        if (!hash) return new Error('Hash is required');
+        const data = await db.get('hashes:discord');
+        return data.includes(hash);
+    },
 };
