@@ -1,27 +1,10 @@
-// Get onetime because using websocket later :)
 // From: https://phish.sinking.yachts/
-const url = 'https://phish.sinking.yachts/v2/all';
-const { request } = require('undici');
 const { set, get } = require('./handler/database');
 const logger = require('./log');
 const WebSocket = require('ws');
 const _ = require('lodash');
 
-module.exports = async () => {
-    try {
-        const blacklist = await request(url, {
-            method: 'GET',
-            headers: {
-                'X-Identity': process.env.IDENTITY || 'phamleduy04/discord-phishing-backend',
-            },
-        }).then(el => el.body.json());
-        await set(`domains:sinking-yachts`, JSON.stringify(blacklist));
-        logger.info('Updated sinking-yachts');
-        await createWebsocket();
-    } catch (err) {
-        logger.err('Error! sinking-yachts', err);
-    }
-};
+module.exports = createWebsocket;
 
 async function createWebsocket() {
     const ws = new WebSocket('wss://phish.sinking.yachts/feed', {
@@ -42,9 +25,9 @@ async function createWebsocket() {
         logger.info(`${data.type} ${data.domains.join(', ')} to sinking-yachts`);
     });
 
-    // renew connection every 3 hours
+    // renew connection every 1 hours
     setTimeout(() => {
         ws.terminate();
         createWebsocket();
-    }, 10800000);
+    }, 3600000);
 };
