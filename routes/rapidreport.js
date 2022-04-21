@@ -19,10 +19,10 @@ router.get('/', async (req, res) => {
         domain = new URL(url).hostname.split('.')[0];
     }
     catch { domain = req.query.url.split('/')[0].split('.')[0]; };
-    const domainCheck = testList.map(name => ({ name, score: jaroWinkler(name, domain) })).sort()[0];
+    const domainCheck = testList.map(name => ({ name, score: jaroWinkler(name, domain) })).sort((a, b) => b.score - a.score)[0];
     // report to other backend service
-    if (domainCheck.score > 0.5) {
-        console.log('High Score');
+    if (domainCheck.score > 0.7) {
+        console.log(`${domainCheck.name} - ${domainCheck.score}`);
         await request(`${process.env.REPORT_URL}/report`, {
             method: 'POST',
             headers: {
