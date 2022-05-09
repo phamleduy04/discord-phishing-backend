@@ -1,4 +1,4 @@
-FROM node:alpine as ts-complier
+FROM node:alpine as ts-compiler
 WORKDIR /home/container
 
 COPY . .
