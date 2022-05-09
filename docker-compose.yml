@@ -1,0 +1,10 @@
+version: '3.6'
+
+services:
+  app:
+    image: 'ghcr.io/phamleduy04/discord-phishing-backend'
+    ports:
+      - 8888:3000
+    restart: always
+    env_file:
+      - .env

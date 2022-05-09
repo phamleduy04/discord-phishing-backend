@@ -28,4 +28,4 @@ jobs:
         with:
           push: true
           file: Dockerfile
-          tags: ghcr.io/${{ github.actor }}/discord-phishing-backend
+          tags: ghcr.io/${{ github.actor }}/discord-phishing-backend:alpine
