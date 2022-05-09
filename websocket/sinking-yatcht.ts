@@ -12,7 +12,7 @@ const createWSConnection = async () => {
         const ws = new WS.WebSocket('wss://phish.sinking.yachts/feed', { headers: { 'X-Identity': config.identity } });
         ws.on('open', () => console.log('Connected to phish.sinking.yachts websocket server!'));
 
-        ws.on('message', async (data) => {
+        ws.on('message', async data => {
             data = JSON.parse(data.toString());
             const domains = JSON.parse(await get(`domains:sinking-yachts`));
             if (data.type === 'add') await set('domains:sinking-yachts', JSON.stringify(_.uniq(_.merge(domains, data.domains))));

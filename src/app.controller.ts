@@ -40,5 +40,5 @@ export class AppController {
         const url = body?.url;
         if (!url) throw new BadRequestException('No url provided!');
         return await this.appService.addLink(url);
-    };
+    }
 }
