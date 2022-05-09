@@ -17,4 +17,4 @@ FROM gcr.io/distroless/nodejs:16
 WORKDIR /home/container
 COPY --from=ts-remover /home/container ./
 USER 1000
-CMD ["main"]
+CMD ["src/main"]
