@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 const createWSConnection = async () => {
     try {
         const ws = new WS.WebSocket('wss://phish.sinking.yachts/feed', { headers: { 'X-Identity': config.identity } });
-        ws.on('open', () => console.log('Connected to phish.sinking.yachts websocket server!'));
+        ws.on('open', () => log.info('Connected to phish.sinking.yachts websocket server!'));
 
         ws.on('message', async data => {
             data = JSON.parse(data.toString());

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Headers, BadRequestException, Body } from '@nestjs/common';
+import { Controller, Get, Post, Headers, BadRequestException, Body, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import config from '../config';
 
@@ -40,5 +40,19 @@ export class AppController {
         const url = body?.url;
         if (!url) throw new BadRequestException('No url provided!');
         return await this.appService.addLink(url);
+    }
+
+    @Get('check')
+    async check(@Query() query: { url: string }) {
+        const url = query?.url;
+        if (!url) throw new BadRequestException('No url provided!');
+        return await this.appService.check(url);
+    }
+
+    @Get('/rapidreport')
+    async rapidreport(@Query() query: { url: string; message: string | null }) {
+        const url = query?.url;
+        if (!url) throw new BadRequestException('No url provided!');
+        return await this.appService.rapidreport(url, query?.message);
     }
 }

@@ -11,7 +11,7 @@ export default async () => {
         const blacklist = await requestPool
             .request({
                 method: 'GET',
-                path: process.uptime() < 300 ? '/v2/all' : '/v2/recent/1200',
+                path: process.uptime() < 30000 ? '/v2/all' : '/v2/recent/1200',
                 headers: { 'X-Identity': config.identity },
             })
             .then(res => res.body.json());

@@ -28,6 +28,7 @@
     "dotenv": "^16.0.0",
     "ioredis": "^5.0.4",
     "is-url": "^1.2.4",
+    "jaro-winkler": "^0.2.8",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",

@@ -14,7 +14,6 @@ const error = (message = 'Unknown error', err: Error) => {
 };
 
 const info = (message: string) => {
-    console.log(message);
     msg(console.info, message);
 };
 const warn = (message: string) => msg(console.warn, `${chalk.yellow('WARNING ->')} -> ${message}`);
