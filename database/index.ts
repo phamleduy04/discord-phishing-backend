@@ -31,7 +31,7 @@ const getAll = async (pattern = '*'): Promise<string[]> => {
     const keys = await db.keys(pattern);
     if (keys.length == 0) return [];
     const values = await db.mget(keys);
-    return _.uniq(JSON.parse(values.flat()[0])) || values;
+    return _.uniq(values.map(v => JSON.parse(v)).flat());
 };
 
 const hasHash = async (hash: string) => {

@@ -51,13 +51,13 @@ export class AppService {
         const urlParsed = parseDomain(fromUrl(url));
         if (urlParsed.type === 'LISTED') url = urlParsed.domain + '.' + urlParsed.topLevelDomains.join('.');
         const hash = createHash('sha256').update(url).digest('hex');
-        if (await hasHash(hash)) return { blacklist: true, domain: url };
+        if (await hasHash(hash)) return { blacklist: true, domain: url, type: 'discord-hash' };
         const blacklistDomains = await getAll('domains:*');
         const blacklistLinks = await getAll('links:*');
         const domainCheck = filterAndReturn(url, blacklistDomains);
-        if (domainCheck.blacklist) return { blacklist: true, domain: url };
+        if (domainCheck.blacklist) return { blacklist: true, domain: url, type: 'domains' };
         const linkCheck = filterLinks(url, blacklistLinks);
-        if (linkCheck.blacklist) return { blacklist: true, domain: url };
+        if (linkCheck.blacklist) return { blacklist: true, domain: url, type: 'links' };
         else return { blacklist: false, domain: url };
     }
 
@@ -88,6 +88,7 @@ export class AppService {
 export interface CheckResult {
     blacklist: boolean;
     domain: string;
+    type?: string;
 }
 
 const filterDomains = (url, urlToCheck) => url == urlToCheck;
