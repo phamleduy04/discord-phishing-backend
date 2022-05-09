@@ -6,7 +6,7 @@ import scraper from '../scraper';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
-    await app.listen(config.port);
+    await app.listen(config.port, '0.0.0.0');
     console.log(`Server running on port ${config.port}`);
 }
 
