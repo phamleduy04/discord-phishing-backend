@@ -7,11 +7,11 @@ const url = 'https://raw.githubusercontent.com/nikolaischunk/discord-phishing-li
 
 export default async () => {
     try {
-        const blacklist = await request(url).then((res) => res.body.json());
-        await set('domains:nikolaischunk', JSON.stringify(blacklist.domains.filter((el) => !el.includes('/') && el.length)));
-        await set('links:nikolaischunk', JSON.stringify(blacklist.links.filter((el) => el.includes('/') && el.length)));
+        const blacklist = await request(url).then(res => res.body.json());
+        await set('domains:nikolaischunk', JSON.stringify(blacklist.domains.filter(el => !el.includes('/') && el.length)));
+        await set('links:nikolaischunk', JSON.stringify(blacklist.domains.filter(el => el.includes('/') && el.length)));
         log.info('Updated discord-phishing-links by nikolaischunk');
     } catch (err) {
-        log.error('Error! disocrd-phishing-links by nikolaischunk', err);
+        log.error('Error! discord-phishing-links by nikolaischunk', err);
     }
 };

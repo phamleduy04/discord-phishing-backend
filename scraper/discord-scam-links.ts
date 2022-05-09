@@ -7,8 +7,8 @@ const url = 'https://raw.githubusercontent.com/BuildBot42/discord-scam-links/mai
 
 export default async () => {
     try {
-        const blacklist = await request(url).then((res) => res.body.text());
-        await set('domains:buildbot42', JSON.stringify(blacklist.split('\n').filter((el) => !el.includes('/') && el.length)));
+        const blacklist = await request(url).then(res => res.body.text());
+        await set('domains:buildbot42', JSON.stringify(blacklist.split('\n').filter(el => !el.includes('/') && el.length)));
         log.info('Updated discord-scam-links by buildbot42');
     } catch (err) {
         log.error('Error! discord-scam-links by buildbot42', err);

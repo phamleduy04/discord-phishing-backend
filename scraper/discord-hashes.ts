@@ -8,7 +8,7 @@ const hashes = 'https://cdn.discordapp.com/bad-domains/hashes.json';
 
 export default async () => {
     try {
-        const response = await request(hashes).then((res) => res.body.json());
+        const response = await request(hashes).then(res => res.body.json());
         await set('hashes:discord', JSON.stringify(response));
         log.info('Updated bad domain hashes from Discord');
     } catch (err) {
