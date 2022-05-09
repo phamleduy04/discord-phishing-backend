@@ -5,7 +5,7 @@ import * as WS from 'ws';
 import { get, set } from '../database';
 import config from '../config';
 import * as log from '../utils/log';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 const createWSConnection = async () => {
     try {

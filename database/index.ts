@@ -1,7 +1,7 @@
 import ioRedis from 'ioredis';
 import config from '../config';
 import * as log from '../utils/log';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 const db = new ioRedis(config.redis.host, {
     password: config.redis.password,
