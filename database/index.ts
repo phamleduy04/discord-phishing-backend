@@ -2,7 +2,6 @@ import ioRedis from 'ioredis';
 import config from '../config';
 import * as log from '../utils/log';
 import _ from 'lodash';
-console.log(_.VERSION);
 
 const db = new ioRedis(config.redis.host, {
     password: config.redis.password,

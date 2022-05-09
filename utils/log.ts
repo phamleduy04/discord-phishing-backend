@@ -1,5 +1,5 @@
-import * as moment from 'moment-timezone';
-import * as chalk from 'chalk';
+import moment from 'moment-timezone';
+import chalk from 'chalk';
 
 const timeNow = () =>
     moment()
