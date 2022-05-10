@@ -63,8 +63,9 @@ export class AppService {
 
     async rapidreport(url: string, message = 'N/A'): Promise<string> {
         const urlParsed = parseDomain(fromUrl(url));
-        if (urlParsed.type === 'LISTED') url = urlParsed.domain + '.' + urlParsed.topLevelDomains.join('.');
-        const domainCheck = testList.map(name => ({ name, score: jaroWinkler(name, url) })).sort((a, b) => b.score - a.score)[0];
+        let domain;
+        if (urlParsed.type === 'LISTED') domain = urlParsed.domain + '.' + urlParsed.topLevelDomains.join('.');
+        const domainCheck = testList.map(name => ({ name, score: jaroWinkler(name, domain) })).sort((a, b) => b.score - a.score)[0];
         if (domainCheck.score > 0.7) {
             console.log(`${domainCheck.name} - ${domainCheck.score}`);
             await request(`${process.env.REPORT_URL}/report`, {
