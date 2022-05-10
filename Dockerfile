@@ -1,23 +1,20 @@
-# FROM alpine:3.15
-# RUN apk update && apk add curl
-# RUN apk add nodejs npm
-# # WORKDIR create the directory and then execute cd
-# WORKDIR /home/container
-
-# RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
-
-# COPY ./package.json ./pnpm-lock.yaml ./
-# RUN pnpm install --frozen-lockfile
-
-# COPY . .
-
-# CMD [ "pnpm", "start" ]
-
-FROM node:alpine
+FROM node:alpine as ts-compiler
 WORKDIR /home/container
-COPY ./package.json ./
-RUN yarn install --production
 
 COPY . .
 
-CMD [ "yarn", "start" ]
+RUN yarn install
+RUN yarn run build
+
+FROM node:alpine as ts-remover
+WORKDIR /home/container
+
+COPY --from=ts-compiler /home/container/package*.json ./
+COPY --from=ts-compiler /home/container/dist ./
+RUN yarn install --production
+
+FROM gcr.io/distroless/nodejs:16
+WORKDIR /home/container
+COPY --from=ts-remover /home/container ./
+USER 1000
+CMD ["src/main"]
