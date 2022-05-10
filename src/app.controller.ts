@@ -49,7 +49,7 @@ export class AppController {
         return await this.appService.check(url);
     }
 
-    @Get('/rapidreport')
+    @Get('rapidreport')
     async rapidreport(@Query() query: { url: string; message: string | null }) {
         const url = query?.url;
         if (!url) throw new BadRequestException('No url provided!');
