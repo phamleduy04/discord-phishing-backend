@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Headers, BadRequestException, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Headers, BadRequestException, Body, Query, UnauthorizedException } from '@nestjs/common';
 import { AppService } from './app.service';
 import config from '../config';
 
@@ -28,7 +28,7 @@ export class AppController {
 
     @Post('adddomain')
     async addDomain(@Headers() header: { authorization: string }, @Body() body: { url: string }): Promise<string> {
-        if (header.authorization !== config.authorization) throw new BadRequestException('Unauthorized!');
+        if (header.authorization !== config.authorization) throw new UnauthorizedException('Unauthorized!');
         const url = body?.url;
         if (!url) throw new BadRequestException('No url provided!');
         return await this.appService.addDomain(url);
@@ -36,7 +36,7 @@ export class AppController {
 
     @Post('addlink')
     async addLink(@Headers() header: { authorization: string }, @Body() body: { url: string }): Promise<string> {
-        if (header.authorization !== config.authorization) throw new BadRequestException('Unauthorized!');
+        if (header.authorization !== config.authorization) throw new UnauthorizedException('Unauthorized!');
         const url = body?.url;
         if (!url) throw new BadRequestException('No url provided!');
         return await this.appService.addLink(url);
