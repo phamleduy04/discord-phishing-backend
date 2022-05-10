@@ -27,24 +27,24 @@ export class AppService {
         return await getAll('domains:*');
     }
 
-    async addDomain(url: string): Promise<string> {
+    async addDomain(url: string): Promise<addRemoveLinkResponse> {
         const urlParsed = parseDomain(fromUrl(url));
         if (urlParsed.type === 'LISTED') url = urlParsed.domain + '.' + urlParsed.topLevelDomains.join('.');
         const customData = JSON.parse(await get('domains:custom')) || [];
         const newData = _.uniq([...customData, url]);
         if (newData.length == customData.length) throw new BadRequestException('Domain already exists!');
         await set(`domains:custom`, JSON.stringify(newData));
-        return 'Domain added!';
+        return { message: 'Domain added!', url };
     }
 
-    async addLink(url: string): Promise<string> {
+    async addLink(url: string): Promise<addRemoveLinkResponse> {
         const urlParsed = parseDomain(fromUrl(url));
         if (urlParsed.type !== 'LISTED') throw new BadRequestException('URL is not a valid domain!');
         const customData = JSON.parse(await get('links:custom')) || [];
         const newData = _.uniq([...customData, url]);
         if (newData.length == customData.length) throw new BadRequestException('Domain already exists!');
         await set(`links:custom`, JSON.stringify(newData));
-        return 'Link added!';
+        return { message: 'Domain added!', url };
     }
 
     async check(url: string): Promise<CheckResult> {
@@ -89,6 +89,11 @@ export interface CheckResult {
     blacklist: boolean;
     domain: string;
     type?: string;
+}
+
+export interface addRemoveLinkResponse {
+    message: string;
+    url: string;
 }
 
 const filterDomains = (url, urlToCheck) => url == urlToCheck;
