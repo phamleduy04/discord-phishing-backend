@@ -1,73 +1,38 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# discord-phishing-backend
+Discord Phishing API list with Redis and Docker
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Access to API
+- You can access to [blacklist domain](https://raw.githubusercontent.com/phamleduy04/discord-phishing-backend/main/blacklist-domains.json) and [blacklist links](https://raw.githubusercontent.com/phamleduy04/discord-phishing-backend/main/blacklist-links.json) at this repo. 
+- I have a [public API](https://discord-phishing-backend.herokuapp.com/) here.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# API Endpoints
+## Authorization
+Some API requests require the use of a generated API key. To set API key, please add `AUTHORIZATION` to your `.env` file. If not the default API key is `secret`. To authenticate an API request, you should provide your API key in the Authorization header.
 
-## Description
+| Method | Endpoint | Description | Require Authorzation Header? |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/all` | Get all data (includes blacklist links and domains) | No |
+| `GET` | `/links` | Get all blacklist domains | No |
+| `GET` | `/check?url={query}` | Check if a url is in blacklist | No |
+| `GET` | `/trace-redirect?url={query}` | Trace redirect a url (shorten link) | No |
+| `POST` | `/adddomain` | Add domain to blacklist **(Require url in body)** | Yes |
+| `POST` | `/addlink` | Add link to blacklist **(Require url in body)** | Yes |
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# Installation
+## Without Docker
+### Redis 
+- Download and setup redis
+### Project
+1. Clone the project
+2. Rename `example.env` to `.env`
+3. Change `REDIS_HOST` to your host (usually `localhost`)
+4. Change others variable to fit your environment (`REDIS_PORT`, `REDIS_PASSWORD`, `PORT`, `TIMEZONE`)
+5. Install package using `npm install` or `yarn install`
+6. Run `npm start`
 
-## Installation
+## With Docker
+1. Clone the project
+2. Rename `example.env` to `.env`
+3. Change others variable to fit your environment (`PORT`, `TIMEZONE`)
+4. Run `docker-compose up -d` to run the container
 
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).

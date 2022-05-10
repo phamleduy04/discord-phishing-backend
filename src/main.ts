@@ -15,5 +15,4 @@ async function bootstrap() {
 
 scraper();
 bootstrap();
-
 setInterval(uploadToGithub, 1000 * 60 * 60 * 12);
