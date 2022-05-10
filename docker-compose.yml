@@ -2,10 +2,21 @@ version: '3.6'
 
 services:
   app:
-    image: 'ghcr.io/phamleduy04/discord-phishing-backend'
+    image: ghcr.io/phamleduy04/discord-phishing-backend:alpine
     container_name: discord-phishing-backend
     ports:
       - 3000:3000
     restart: always
     env_file:
       - .env
+  redis:
+    image: bitnami/redis:latest
+    container_name: discord-phishing-backend-redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis-data:/bitnami/redis/data
+    environment:
+      # Pls change this to something more secure
+      - REDIS_PASSWORD=ADMIN_PASSWORD
