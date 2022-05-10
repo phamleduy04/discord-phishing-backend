@@ -1,6 +1,3 @@
-# Remove this line if you want to build locally
-LABEL org.opencontainers.image.source https://github.com/phamleduy04/discord-phishing-backend
-
 FROM node:alpine as ts-compiler
 WORKDIR /home/container
 
