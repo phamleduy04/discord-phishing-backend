@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import config from '../config';
 import scraper from '../scraper';
 import morgan from 'morgan';
+import uploadToGithub from '../upload/github';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
@@ -14,3 +15,5 @@ async function bootstrap() {
 
 scraper();
 bootstrap();
+
+setInterval(uploadToGithub, 1000 * 60 * 60 * 12);
