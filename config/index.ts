@@ -1,4 +1,4 @@
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
 if (dotenv.config().error) {
     if (!process.env.DOCKER) console.error('Failed to load enviroment variables');

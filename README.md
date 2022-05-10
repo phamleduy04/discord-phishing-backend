@@ -35,3 +35,4 @@ Some API requests require the use of a generated API key. To set API key, please
 2. Rename `example.env` to `.env`
 3. Change others variable to fit your environment (`PORT`, `TIMEZONE`)
 4. Run `docker-compose up -d` to run the container
+
