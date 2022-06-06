@@ -1,10 +1,9 @@
 {
   "name": "discord-phishing-backend",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
-  "license": "UNLICENSED",
+  "description": "Discord Phishing API list with Redis and Docker support",
+  "author": "phamleduy04",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
