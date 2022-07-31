@@ -18,7 +18,7 @@ const uploadFile = async (content: string, fileName: string): Promise<void> => {
     if (contentEncoded == fileData.content) return;
 
     const data = JSON.stringify({
-        message: `Automatic update ${fileName}`,
+        message: `[skip actions] Automatic update ${fileName}`,
         content: contentEncoded,
         sha: fileData ? fileData.sha : null,
     });
