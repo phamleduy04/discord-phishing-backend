@@ -1,8 +1,13 @@
-import moment from 'moment-timezone';
+import dayjs from 'dayjs';
+import dayjsTZ from 'dayjs/plugin/timezone';
+import dayjsUTC from 'dayjs/plugin/utc';
+
+dayjs.extend(dayjsTZ);
+dayjs.extend(dayjsUTC);
 import chalk from 'chalk';
 
 const timeNow = () =>
-    moment()
+    dayjs()
         .tz(process.env.TZ || 'America/Chicago')
         .format('MM/DD/YYYY hh:mm:ss');
 
