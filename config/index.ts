@@ -32,7 +32,7 @@ export interface backendConfig {
     github: {
         token: string | null;
         repo: string | null;
-    },
+    };
     timezone: string;
     authorization: string;
     identity: string;

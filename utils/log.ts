@@ -18,9 +18,7 @@ const error = (message = 'Unknown error', err: Error) => {
     console.error(err);
 };
 
-const info = (message: string) => {
-    msg(console.info, message);
-};
+const info = (message: string) => msg(console.info, message);
 const warn = (message: string) => msg(console.warn, `${yellow('WARNING ->')} -> ${message}`);
 
 export { error, info, warn };
