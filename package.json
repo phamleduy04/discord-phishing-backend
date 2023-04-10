@@ -33,7 +33,7 @@
     "morgan": "^1.10.0",
     "parse-domain": "5.0.0",
     "reflect-metadata": "^0.1.13",
-    "rimraf": "^4.3.0",
+    "rimraf": "^5.0.0",
     "rxjs": "^7.8.0",
     "undici": "^5.20.0",
     "ws": "^8.12.1"
